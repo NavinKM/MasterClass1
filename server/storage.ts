@@ -17,6 +17,8 @@ import {
   type CourseWithInstructor,
   type InstructorWithCourses
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, desc, ilike, or, and } from "drizzle-orm";
 
 export interface IStorage {
   // Courses
@@ -415,4 +417,186 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getCourse(id: number): Promise<Course | undefined> {
+    const [course] = await db.select().from(courses).where(eq(courses.id, id));
+    return course || undefined;
+  }
+
+  async getCourseWithInstructor(id: number): Promise<CourseWithInstructor | undefined> {
+    const result = await db
+      .select()
+      .from(courses)
+      .innerJoin(instructors, eq(courses.instructorId, instructors.id))
+      .where(eq(courses.id, id));
+
+    if (result.length === 0) return undefined;
+
+    const { courses: course, instructors: instructor } = result[0];
+    return { ...course, instructor };
+  }
+
+  async getAllCourses(): Promise<Course[]> {
+    return await db.select().from(courses);
+  }
+
+  async getCoursesWithInstructors(): Promise<CourseWithInstructor[]> {
+    const result = await db
+      .select()
+      .from(courses)
+      .innerJoin(instructors, eq(courses.instructorId, instructors.id))
+      .orderBy(desc(courses.featured), desc(courses.id));
+
+    return result.map(({ courses: course, instructors: instructor }) => ({
+      ...course,
+      instructor
+    }));
+  }
+
+  async getFeaturedCourses(): Promise<CourseWithInstructor[]> {
+    const result = await db
+      .select()
+      .from(courses)
+      .innerJoin(instructors, eq(courses.instructorId, instructors.id))
+      .where(eq(courses.featured, true));
+
+    return result.map(({ courses: course, instructors: instructor }) => ({
+      ...course,
+      instructor
+    }));
+  }
+
+  async getCoursesByCategory(category: string): Promise<CourseWithInstructor[]> {
+    const result = await db
+      .select()
+      .from(courses)
+      .innerJoin(instructors, eq(courses.instructorId, instructors.id))
+      .where(ilike(courses.category, category));
+
+    return result.map(({ courses: course, instructors: instructor }) => ({
+      ...course,
+      instructor
+    }));
+  }
+
+  async getCoursesByInstructor(instructorId: number): Promise<Course[]> {
+    return await db
+      .select()
+      .from(courses)
+      .where(eq(courses.instructorId, instructorId));
+  }
+
+  async searchCourses(query: string): Promise<CourseWithInstructor[]> {
+    const result = await db
+      .select()
+      .from(courses)
+      .innerJoin(instructors, eq(courses.instructorId, instructors.id))
+      .where(
+        or(
+          ilike(courses.title, `%${query}%`),
+          ilike(courses.description, `%${query}%`),
+          ilike(courses.category, `%${query}%`),
+          ilike(instructors.name, `%${query}%`)
+        )
+      );
+
+    return result.map(({ courses: course, instructors: instructor }) => ({
+      ...course,
+      instructor
+    }));
+  }
+
+  async createCourse(insertCourse: InsertCourse): Promise<Course> {
+    const [course] = await db
+      .insert(courses)
+      .values(insertCourse)
+      .returning();
+    return course;
+  }
+
+  async getInstructor(id: number): Promise<Instructor | undefined> {
+    const [instructor] = await db.select().from(instructors).where(eq(instructors.id, id));
+    return instructor || undefined;
+  }
+
+  async getInstructorWithCourses(id: number): Promise<InstructorWithCourses | undefined> {
+    const [instructor] = await db.select().from(instructors).where(eq(instructors.id, id));
+    if (!instructor) return undefined;
+
+    const instructorCourses = await db
+      .select()
+      .from(courses)
+      .where(eq(courses.instructorId, id));
+
+    return { ...instructor, courses: instructorCourses };
+  }
+
+  async getAllInstructors(): Promise<Instructor[]> {
+    return await db.select().from(instructors);
+  }
+
+  async createInstructor(insertInstructor: InsertInstructor): Promise<Instructor> {
+    const [instructor] = await db
+      .insert(instructors)
+      .values(insertInstructor)
+      .returning();
+    return instructor;
+  }
+
+  async getCategory(id: number): Promise<Category | undefined> {
+    const [category] = await db.select().from(categories).where(eq(categories.id, id));
+    return category || undefined;
+  }
+
+  async getAllCategories(): Promise<Category[]> {
+    return await db.select().from(categories);
+  }
+
+  async createCategory(insertCategory: InsertCategory): Promise<Category> {
+    const [category] = await db
+      .insert(categories)
+      .values(insertCategory)
+      .returning();
+    return category;
+  }
+
+  async getAllTestimonials(): Promise<Testimonial[]> {
+    return await db.select().from(testimonials);
+  }
+
+  async createTestimonial(insertTestimonial: InsertTestimonial): Promise<Testimonial> {
+    const [testimonial] = await db
+      .insert(testimonials)
+      .values(insertTestimonial)
+      .returning();
+    return testimonial;
+  }
+
+  async getEnrollment(userId: number, courseId: number): Promise<Enrollment | undefined> {
+    const [enrollment] = await db
+      .select()
+      .from(enrollments)
+      .where(and(
+        eq(enrollments.userId, userId),
+        eq(enrollments.courseId, courseId)
+      ));
+    return enrollment || undefined;
+  }
+
+  async getUserEnrollments(userId: number): Promise<Enrollment[]> {
+    return await db
+      .select()
+      .from(enrollments)
+      .where(eq(enrollments.userId, userId));
+  }
+
+  async createEnrollment(insertEnrollment: InsertEnrollment): Promise<Enrollment> {
+    const [enrollment] = await db
+      .insert(enrollments)
+      .values(insertEnrollment)
+      .returning();
+    return enrollment;
+  }
+}
+
+export const storage = new DatabaseStorage();
