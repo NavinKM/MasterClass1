@@ -16,7 +16,7 @@ function Router() {
       <Route path="/courses" component={Courses} />
       <Route path="/courses/:id" component={CourseDetail} />
       <Route path="/instructors/:id" component={InstructorProfile} />
-      <Route component={NotFound} />
+      <Route path="*" component={NotFound} />
     </Switch>
   );
 }
