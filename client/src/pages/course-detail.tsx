@@ -172,14 +172,14 @@ export default function CourseDetail() {
 
                 {/* Tabs */}
                 <Tabs defaultValue="overview" className="mt-8">
-                  <TabsList className="grid w-full grid-cols-3 bg-masterclass-dark-gray">
-                    <TabsTrigger value="overview" className="data-[state=active]:bg-masterclass-accent">
+                  <TabsList className="grid w-full grid-cols-3 masterclass-dark-gray-bg">
+                    <TabsTrigger value="overview" className="data-[state=active]:masterclass-accent-bg data-[state=active]:text-white">
                       Overview
                     </TabsTrigger>
-                    <TabsTrigger value="lessons" className="data-[state=active]:bg-masterclass-accent">
+                    <TabsTrigger value="lessons" className="data-[state=active]:masterclass-accent-bg data-[state=active]:text-white">
                       Lessons
                     </TabsTrigger>
-                    <TabsTrigger value="reviews" className="data-[state=active]:bg-masterclass-accent">
+                    <TabsTrigger value="reviews" className="data-[state=active]:masterclass-accent-bg data-[state=active]:text-white">
                       Reviews
                     </TabsTrigger>
                   </TabsList>
