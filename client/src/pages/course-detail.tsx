@@ -110,7 +110,7 @@ export default function CourseDetail() {
               {/* Video Player */}
               <VideoPlayer 
                 thumbnailUrl={course.thumbnailUrl}
-                videoUrl={course.videoPreviewUrl}
+                videoUrl={course.videoPreviewUrl || undefined}
                 title={course.title}
               />
 

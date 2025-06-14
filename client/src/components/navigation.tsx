@@ -22,10 +22,8 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/">
-              <div className="text-2xl font-bold masterclass-accent cursor-pointer">
-                MasterLearn
-              </div>
+            <Link href="/" className="text-2xl font-bold masterclass-accent cursor-pointer">
+              MasterLearn
             </Link>
           </div>
           
@@ -33,16 +31,16 @@ export default function Navigation() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  <span
-                    className={`transition-colors duration-200 cursor-pointer ${
-                      location === link.href
-                        ? "text-white masterclass-accent"
-                        : "masterclass-light-gray hover:text-white"
-                    }`}
-                  >
-                    {link.label}
-                  </span>
+                <Link 
+                  key={link.href} 
+                  href={link.href}
+                  className={`transition-colors duration-200 cursor-pointer ${
+                    location === link.href
+                      ? "text-white masterclass-accent"
+                      : "masterclass-light-gray hover:text-white"
+                  }`}
+                >
+                  {link.label}
                 </Link>
               ))}
             </div>
@@ -80,17 +78,17 @@ export default function Navigation() {
               <SheetContent side="right" className="w-[300px] masterclass-secondary-bg border-masterclass-dark-gray">
                 <div className="flex flex-col space-y-4 mt-8">
                   {navLinks.map((link) => (
-                    <Link key={link.href} href={link.href}>
-                      <span
-                        className={`block py-2 text-lg transition-colors duration-200 cursor-pointer ${
-                          location === link.href
-                            ? "masterclass-accent"
-                            : "masterclass-light-gray hover:text-white"
-                        }`}
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {link.label}
-                      </span>
+                    <Link 
+                      key={link.href} 
+                      href={link.href}
+                      className={`block py-2 text-lg transition-colors duration-200 cursor-pointer ${
+                        location === link.href
+                          ? "masterclass-accent"
+                          : "masterclass-light-gray hover:text-white"
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.label}
                     </Link>
                   ))}
                   <div className="pt-4 border-t border-masterclass-dark-gray">
