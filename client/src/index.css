@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+
+  /* MasterClass Dark Theme Colors */
+  --masterclass-primary: hsl(0, 0%, 0%);
+  --masterclass-secondary: hsl(0, 0%, 10.2%);
+  --masterclass-accent: hsl(16, 100%, 60%);
+  --masterclass-accent-blue: hsl(214, 71%, 56%);
+  --masterclass-dark-gray: hsl(0, 0%, 17.6%);
+  --masterclass-medium-gray: hsl(0, 0%, 25.1%);
+  --masterclass-light-gray: hsl(0, 0%, 72.2%);
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(0, 0%, 10.2%);
+  --muted-foreground: hsl(0, 0%, 72.2%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(0, 0%, 17.6%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 17.6%);
+  --input: hsl(0, 0%, 17.6%);
+  --primary: hsl(16, 100%, 60%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(0, 0%, 10.2%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(0, 0%, 10.2%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-masterclass-primary text-white;
+  }
+
+  html {
+    @apply dark;
+  }
+}
+
+@layer components {
+  .masterclass-accent {
+    @apply text-[hsl(16,100%,60%)];
+  }
+  
+  .masterclass-accent-bg {
+    @apply bg-[hsl(16,100%,60%)];
+  }
+
+  .masterclass-secondary-bg {
+    @apply bg-[hsl(0,0%,10.2%)];
+  }
+
+  .masterclass-dark-gray-bg {
+    @apply bg-[hsl(0,0%,17.6%)];
+  }
+
+  .masterclass-light-gray {
+    @apply text-[hsl(0,0%,72.2%)];
+  }
+
+  .gradient-overlay {
+    @apply bg-gradient-to-r from-masterclass-primary via-masterclass-primary/80 to-transparent;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .hero-section {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.4)
+    );
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 10.2%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(0, 0%, 25.1%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(0, 0%, 35%);
+}
+
+/* Smooth animations */
+* {
+  scroll-behavior: smooth;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
