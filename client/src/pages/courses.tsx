@@ -36,11 +36,11 @@ export default function Courses() {
       course.instructor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       course.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesCategory = !selectedCategory && !categoryFromUrl ||
+    const matchesCategory = (!selectedCategory || selectedCategory === "all") && !categoryFromUrl ||
       (categoryFromUrl && course.category.toLowerCase() === categoryFromUrl.toLowerCase()) ||
-      (selectedCategory && course.category === selectedCategory);
+      (selectedCategory && selectedCategory !== "all" && course.category === selectedCategory);
 
-    const matchesDifficulty = !selectedDifficulty || course.difficulty === selectedDifficulty;
+    const matchesDifficulty = !selectedDifficulty || selectedDifficulty === "all" || course.difficulty === selectedDifficulty;
 
     return matchesSearch && matchesCategory && matchesDifficulty;
   })?.sort((a, b) => {
@@ -105,7 +105,7 @@ export default function Courses() {
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
                 <SelectContent className="bg-masterclass-dark-gray border-masterclass-medium-gray">
-                  <SelectItem value="">All Categories</SelectItem>
+                  <SelectItem value="all">All Categories</SelectItem>
                   {categories?.map((category) => (
                     <SelectItem key={category.id} value={category.name}>
                       {category.name}
@@ -119,7 +119,7 @@ export default function Courses() {
                   <SelectValue placeholder="Difficulty" />
                 </SelectTrigger>
                 <SelectContent className="bg-masterclass-dark-gray border-masterclass-medium-gray">
-                  <SelectItem value="">All Levels</SelectItem>
+                  <SelectItem value="all">All Levels</SelectItem>
                   <SelectItem value="Beginner">Beginner</SelectItem>
                   <SelectItem value="Intermediate">Intermediate</SelectItem>
                   <SelectItem value="Advanced">Advanced</SelectItem>

@@ -34,15 +34,15 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-8">
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
-                  <a
-                    className={`transition-colors duration-200 ${
+                  <span
+                    className={`transition-colors duration-200 cursor-pointer ${
                       location === link.href
                         ? "text-white masterclass-accent"
                         : "masterclass-light-gray hover:text-white"
                     }`}
                   >
                     {link.label}
-                  </a>
+                  </span>
                 </Link>
               ))}
             </div>
@@ -81,8 +81,8 @@ export default function Navigation() {
                 <div className="flex flex-col space-y-4 mt-8">
                   {navLinks.map((link) => (
                     <Link key={link.href} href={link.href}>
-                      <a
-                        className={`block py-2 text-lg transition-colors duration-200 ${
+                      <span
+                        className={`block py-2 text-lg transition-colors duration-200 cursor-pointer ${
                           location === link.href
                             ? "masterclass-accent"
                             : "masterclass-light-gray hover:text-white"
@@ -90,7 +90,7 @@ export default function Navigation() {
                         onClick={() => setIsOpen(false)}
                       >
                         {link.label}
-                      </a>
+                      </span>
                     </Link>
                   ))}
                   <div className="pt-4 border-t border-masterclass-dark-gray">
