@@ -118,6 +118,10 @@ MasterLearn is a full-stack online learning platform inspired by MasterClass, fe
   - Applied premium dark theme with MasterClass-inspired design
   - Fixed all console warnings and TypeScript errors
   - Platform now fully functional with responsive design
+  - Upgraded to PostgreSQL database with Drizzle ORM
+  - Migrated all data from memory storage to persistent database
+  - Added advanced search with case-insensitive SQL queries
+  - Database seeded with sample instructors, courses, and testimonials
 
 ## User Preferences
 
