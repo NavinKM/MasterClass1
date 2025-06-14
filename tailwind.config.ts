@@ -61,6 +61,15 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        masterclass: {
+          primary: "var(--masterclass-primary)",
+          secondary: "var(--masterclass-secondary)",
+          accent: "var(--masterclass-accent)",
+          "accent-blue": "var(--masterclass-accent-blue)",
+          "dark-gray": "var(--masterclass-dark-gray)",
+          "medium-gray": "var(--masterclass-medium-gray)",
+          "light-gray": "var(--masterclass-light-gray)",
+        },
       },
       keyframes: {
         "accordion-down": {

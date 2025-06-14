@@ -328,7 +328,9 @@ export class MemStorage implements IStorage {
   async createCourse(insertCourse: InsertCourse): Promise<Course> {
     const course: Course = {
       id: this.currentCourseId++,
-      ...insertCourse
+      ...insertCourse,
+      videoPreviewUrl: insertCourse.videoPreviewUrl ?? null,
+      featured: insertCourse.featured ?? false
     };
     this.courses.set(course.id, course);
     return course;
@@ -405,7 +407,8 @@ export class MemStorage implements IStorage {
     const enrollment: Enrollment = {
       id: this.currentEnrollmentId++,
       enrolledAt: new Date(),
-      ...insertEnrollment
+      ...insertEnrollment,
+      progress: insertEnrollment.progress || 0
     };
     this.enrollments.set(`${enrollment.userId}-${enrollment.courseId}`, enrollment);
     return enrollment;

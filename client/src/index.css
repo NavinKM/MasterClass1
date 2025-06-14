@@ -62,7 +62,8 @@
   }
 
   body {
-    @apply font-sans antialiased bg-masterclass-primary text-white;
+    @apply font-sans antialiased text-white;
+    background-color: hsl(0, 0%, 0%);
   }
 
   html {
@@ -72,31 +73,43 @@
 
 @layer components {
   .masterclass-accent {
-    @apply text-[hsl(16,100%,60%)];
+    color: hsl(16, 100%, 60%);
   }
   
   .masterclass-accent-bg {
-    @apply bg-[hsl(16,100%,60%)];
+    background-color: hsl(16, 100%, 60%);
   }
 
   .masterclass-secondary-bg {
-    @apply bg-[hsl(0,0%,10.2%)];
+    background-color: hsl(0, 0%, 10.2%);
   }
 
   .masterclass-dark-gray-bg {
-    @apply bg-[hsl(0,0%,17.6%)];
+    background-color: hsl(0, 0%, 17.6%);
   }
 
   .masterclass-light-gray {
-    @apply text-[hsl(0,0%,72.2%)];
+    color: hsl(0, 0%, 72.2%);
+  }
+
+  .masterclass-primary {
+    background-color: hsl(0, 0%, 0%);
+  }
+
+  .masterclass-medium-gray {
+    color: hsl(0, 0%, 25.1%);
   }
 
   .gradient-overlay {
-    @apply bg-gradient-to-r from-masterclass-primary via-masterclass-primary/80 to-transparent;
+    background: linear-gradient(to right, hsl(0, 0%, 0%), hsla(0, 0%, 0%, 0.8), transparent);
   }
 
   .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
+    transition: transform 0.3s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
   }
 
   .hero-section {
